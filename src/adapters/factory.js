@@ -6,15 +6,15 @@ switch (environment) {
             ProductsDao: require('../DAOs/mongodb/products.dao'),
             UsersDao: require('../DAOs/mongodb/users.dao.js'),
             CartsDao: require('../DAOs/mongodb/carts.dao.js'),
-            // chat: require('../DAOs/mongodb/chat.dao.js'),
+            ChatDao: require('../DAOs/mongodb/chat.dao.js'),
         };
         break;
     case 'devfs':
         module.exports = {
             ProductsDao: require('../DAOs/fs/products.dao'),
-            // users: require('../DAOs/fs/users.dao'),
+            UsersDao: require('../DAOs/fs/users.dao'),
             CartsDao: require('../DAOs/fs/carts.dao'),
-            // chat: require('../DAOs/fs/chat.dao'),
+            ChatDao: require('../DAOs/fs/chat.dao'),
         };
         break;
     case 'prod':
