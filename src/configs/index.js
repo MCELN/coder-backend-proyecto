@@ -8,5 +8,11 @@ module.exports = {
         pass: process.env.DB_PASS,
         host: process.env.DB_HOST,
         name: process.env.DB_NAME,
-    }
+    },
+    jwtKey: process.env.JWT_PRIVATE_KEY,
+    github: {
+        clientID: process.env.CLIENTID,
+        clientSecret: process.env.CLIENT_SECRET,
+        callbackURL: process.env.CALLBACKURL,
+    },
 }

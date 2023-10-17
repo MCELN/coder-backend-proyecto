@@ -8,6 +8,6 @@ class UserDto {
         this.age = userInfo.age;
         this.password = userInfo.password;
         this.role = userInfo.role || 'user';
-        this.status = userInfo.status;
+        this.status = userInfo.status || true;
     };
 };

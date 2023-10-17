@@ -28,7 +28,7 @@ class ChatDao {
     async create(newMessage) {
         try {
             newMessage.id = uuidv4();
-            this.#Chats.push.apply(newMessage);
+            this.#Chats.push(newMessage);
             const response = await fs.promises.writeFile(this.#path, JSON.stringify(this.#Chats));
             return response;
         } catch (error) {

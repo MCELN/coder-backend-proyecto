@@ -39,6 +39,16 @@ const updateOne = async (id, userInfo) => {
 
 const create = async (userInfo) => {
     try {
+        const {
+            first_name,
+            last_name,
+            email,
+            age,
+            password
+        } = userInfo;
+
+        if (!first_name || !last_name || !email || !age || !password) return 'Bad request';
+
         const newUser = new UserDto(userInfo);
         const user = await getOne({ email: userInfo.email });
         if (user) return 'Usuario en uso';
