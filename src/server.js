@@ -19,7 +19,6 @@ app.set('views', __dirname + '/views');
 
 initializePassport();
 app.use(passport.initialize());
-app.use(passport.session());
 
 
 MongoConnection.getInstance();

@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const productsService = require('../services/products.service');
+const passport = require('passport');
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const products = await productsService.getAll();
         res.json({ status: 'success', payload: products });

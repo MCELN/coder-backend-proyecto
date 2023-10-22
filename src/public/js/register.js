@@ -29,7 +29,7 @@ registerForm.addEventListener('submit', async (e) => {
                 timer: 2000
             })
                 .then(() => {
-                    window.location.href = '/login';
+                    window.location.href = '/auth/login';
                 });
 
         } else {

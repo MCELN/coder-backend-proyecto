@@ -19,7 +19,6 @@ loginForm.addEventListener('submit', async (e) => {
         });
 
         const userSession = await response.json();
-        console.log(userSession)
 
         if (userSession.payload.first_name) {
             Swal.fire({
@@ -30,10 +29,10 @@ loginForm.addEventListener('submit', async (e) => {
                 timer: 2000
             })
                 .then(() => {
-                    window.location.href = '/products';
+                    window.location.href = '/api/products';
                 })
         } else {
-            console.log(userSession);
+            console.log('Invalid credentials');
         }
 
     } catch (error) {

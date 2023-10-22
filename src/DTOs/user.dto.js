@@ -11,3 +11,5 @@ class UserDto {
         this.status = userInfo.status || true;
     };
 };
+
+module.exports = UserDto;

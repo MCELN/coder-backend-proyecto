@@ -1,17 +1,20 @@
 const passport = require("passport");
 const local = require('passport-local');
 const userService = require('../services/users.service');
+const jwt = require('passport-jwt');
 const GitHubStrategy = require('passport-github2');
-const { comparePassword } = require("../utils/bcrypt.util");
-const { github } = require('../configs/index');
+const { github, jwtKey } = require('../configs/index');
+const cookieExtractor = require("../utils/cookie-extractor.util");
 
 const LocalStrategy = local.Strategy;
+const JWTStrategy = jwt.Strategy;
+const ExtractJwt = jwt.ExtractJwt;
+const secretKey = jwtKey;
 
 const initializePassport = () => {
     passport.use('register', new LocalStrategy(
         { passReqToCallback: true, usernameField: 'email' },
         async (req, username, password, done) => {
-            const { email } = req.body;
 
             try {
                 const user = await userService.getOne({ email: username });
@@ -20,8 +23,8 @@ const initializePassport = () => {
                     return done(null, false);
                 }
 
-                const infoUser = await userService.create(newUser);
-                return done(null, newUser);
+                const infoUser = await userService.create(req.body);
+                return done(null, infoUser);
 
             } catch (error) {
                 return done('Internal error' + error);
@@ -59,6 +62,17 @@ const initializePassport = () => {
             return done(error);
         }
     }))
+
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: secretKey,
+    }, async (jwt_payload, done) => {
+        try {
+            done(null, jwt_payload);
+        } catch (error) {
+            done(error);
+        }
+    }));
 
     passport.serializeUser((user, done) => {
         done(null, user._id);
