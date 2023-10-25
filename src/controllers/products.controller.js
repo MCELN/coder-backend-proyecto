@@ -1,11 +1,18 @@
 const { Router } = require('express');
 const productsService = require('../services/products.service');
+const userService = require('../services/users.service');
+const cartService = require('../services/carts.service');
 const passport = require('passport');
 
 const router = Router();
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }), async (req, res) => {
     try {
+        const user = await userService.getById(req.user.user);
+        const cart = await cartService.getById(user.cart);
+        console.log(req.user.user)
+        console.log(cart)
+
         const products = await productsService.getAll();
         res.json({ status: 'success', payload: products });
     } catch (error) {
